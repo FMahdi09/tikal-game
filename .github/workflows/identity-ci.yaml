@@ -8,7 +8,7 @@ on:
       - .github/workflows/identity-ci.yaml
 
 jobs:
-  enforce-formatting:
+  format:
     uses: ./.github/workflows/backend-format.yaml
     with:
       project-directory: Identity
