@@ -1,0 +1,14 @@
+name: Identity CI
+
+on:
+  push:
+    paths:
+      - Identity/**
+      - .github/workflows/backend/**
+      - .github/workflows/identity-ci.yaml
+
+jobs:
+  enforce-formatting:
+    uses: ./.github/workflows/backend/format.yaml
+    with:
+      project-directory: Identity
