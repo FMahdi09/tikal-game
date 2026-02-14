@@ -1,12 +1,11 @@
 ---
 # yaml-language-server: $schema=https://json.schemastore.org/github-workflow.json
-name: Identity CI
+name: Identity CI/CD
 
 on:
   push:
     paths:
       - Identity/**
-      - .github/workflows/identity-ci.yaml
 
 jobs:
   format:
@@ -14,3 +13,11 @@ jobs:
     uses: ./.github/workflows/backend-format.yaml
     with:
       project-directory: Identity
+
+  release:
+    name: Release
+    if: github.ref == 'refs/heads/main'
+    uses: ./.github/workflows/create-release.yaml
+    with:
+      project-directory: Identity
+      project-name: identity
