@@ -35,6 +35,25 @@ jobs:
         uses: gittools/actions/gitversion/execute@d0139503a9321f76b4a417dfdc8aebcec24decdd # v4.2.0
         with:
           configFilePath: "${{ inputs.project-directory }}/GitVersion.yaml"
+      
+      - name: Generate Changelog
+        run: |
+          PREVIOUS_TAG=$(git tag -l "${{ inputs.project-name }}-*" --sort=-version:refname | head -n 1)
+
+          echo "## What's Changed" > CHANGELOG.md
+          echo "" >> CHANGELOG.md
+
+          echo "### Features" >> CHANGELOG.md
+          echo "" >> CHANGELOG.md
+
+          git log ${PREVIOUS_TAG}.. --grep="^feat" --pretty=format:"- %s by @%an" ${{ inputs.project-directory }} >> CHANGELOG.md
+          echo "" >> CHANGELOG.md
+
+          echo "### Bugfixes" >> CHANGELOG.md
+          echo "" >> CHANGELOG.md
+
+          git log ${PREVIOUS_TAG}.. --grep="^fix" --pretty=format:"- %s by @%an" ${{ inputs.project-directory }} >> CHANGELOG.md
+          echo "" >> CHANGELOG.md
 
       - name: Create Release
         uses: ncipollo/release-action@b7eabc95ff50cbeeedec83973935c8f306dfcd0b # v1.20.0
