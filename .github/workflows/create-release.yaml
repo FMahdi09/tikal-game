@@ -47,13 +47,13 @@ jobs:
             echo "### Features"
             echo ""
 
-            git log ${PREVIOUS_TAG}.. --grep="^feat" --pretty=format:"- %s by @%an" ${{ inputs.project-directory }}
+            git log "${PREVIOUS_TAG}".. --grep="^feat" --pretty=format:"- %s by @%an" ${{ inputs.project-directory }}
             echo ""
 
             echo "### Bugfixes"
             echo ""
 
-            git log ${PREVIOUS_TAG}.. --grep="^fix" --pretty=format:"- %s by @%an" ${{ inputs.project-directory }}
+            git log "${PREVIOUS_TAG}".. --grep="^fix" --pretty=format:"- %s by @%an" ${{ inputs.project-directory }}
             echo ""
           } >> CHANGELOG.md
 
