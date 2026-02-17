@@ -1,4 +1,4 @@
-namespace Identity;
+namespace Identity.WebHost;
 
 public class WeatherForecast
 {

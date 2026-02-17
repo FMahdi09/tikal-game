@@ -13,9 +13,10 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Content Include="..\.dockerignore">
+      <Content Include="..\..\.dockerignore">
         <Link>.dockerignore</Link>
       </Content>
+      <Content Include="packages.lock.json" />
     </ItemGroup>
 
 </Project>
