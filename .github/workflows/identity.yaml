@@ -32,6 +32,6 @@ jobs:
     uses: ./.github/workflows/deploy-release.yaml
     secrets: inherit
     with:
-      dockerfile: ./Identity/Dockerfile
+      dockerfile: ./Identity/Identity.WebHost/Dockerfile
       project-name: identity
       version: ${{ needs.release.outputs.version }}
