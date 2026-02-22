@@ -42,8 +42,16 @@ jobs:
       - name: Build projects
         run: dotnet build ${{ inputs.project-directory }}/Filter.slnf --no-restore
 
-      - name: Create migration bundle
-        run: dotnet ef migrations bundle --project ${{ inputs.project-directory}}/${{ inputs.project-directory }}.WebHost --output efbundle
+      - name: Create migration bundles for all modules
+        run: | 
+          for dir in "${{ inputs.project-directory }}"/Modules/*/; do
+            name=$(basename "$dir")
+            dotnet ef migrations bundle \
+              --context "${name}DbContext" \
+              --startup-project "${{ inputs.project-directory }}/${{ inputs.project-directory }}.WebHost" \
+              --project "${{ inputs.project-directory }}/Modules/${name}/${name}.Infrastructure" \
+              --output "${name}-efbundle"
+          done
 
       - name: Setup Azure CLI
         uses: azure/login@a457da9ea143d694b1b9c7c869ebb04ebe844ef5 # v2.3.0
@@ -71,5 +79,9 @@ jobs:
             echo "::add-mask::$DB_USERNAME"
             echo "DB_USERNAME=$DB_USERNAME" >> $GITHUB_ENV
 
-      - name: Apply migrations
-        run: ./efbundle --connection "Server=${{ env.DB_HOST }};Database=${{ env.DB_NAME }};Port=${{ env.DB_PORT }};User Id=${{ env.DB_USERNAME }};Password=${{ env.DB_PASSWORD }};Ssl Mode=Require;"
+      - name: Apply migrations for all modules
+        run: |
+          for dir in "${{ inputs.project-directory }}"/Modules/*/; do
+            name=$(basename "$dir")
+            ./${name}-efbundle --connection "Server=${{ env.DB_HOST }};Database=${{ env.DB_NAME }};Port=${{ env.DB_PORT }};User Id=${{ env.DB_USERNAME }};Password=${{ env.DB_PASSWORD }};Ssl Mode=Require;"
+          done
