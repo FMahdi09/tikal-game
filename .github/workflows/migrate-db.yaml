@@ -43,7 +43,7 @@ jobs:
         run: dotnet build ${{ inputs.project-directory }}/Filter.slnf --no-restore
 
       - name: Create migration bundles for all modules
-        run: | 
+        run: |
           for dir in "${{ inputs.project-directory }}"/Modules/*/; do
             name=$(basename "$dir")
             dotnet ef migrations bundle \
@@ -83,5 +83,6 @@ jobs:
         run: |
           for dir in "${{ inputs.project-directory }}"/Modules/*/; do
             name=$(basename "$dir")
-            ./${name}-efbundle --connection "Server=${{ env.DB_HOST }};Database=${{ env.DB_NAME }};Port=${{ env.DB_PORT }};User Id=${{ env.DB_USERNAME }};Password=${{ env.DB_PASSWORD }};Ssl Mode=Require;"
+            ./"${name}-efbundle" \
+              --connection "Server=${{ env.DB_HOST }};Database=${{ env.DB_NAME }};Port=${{ env.DB_PORT }};User Id=${{ env.DB_USERNAME }};Password=${{ env.DB_PASSWORD }};Ssl Mode=Require;"
           done
