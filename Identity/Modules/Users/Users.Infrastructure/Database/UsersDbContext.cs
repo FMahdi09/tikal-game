@@ -11,4 +11,11 @@ public class UsersDbContext : IdentityDbContext<UserEntity, IdentityRole<int>, i
         : base(options)
     {
     }
+
+    protected override void OnModelCreating(ModelBuilder builder)
+    {
+        base.OnModelCreating(builder);
+
+        builder.HasDefaultSchema("users");
+    }
 }
