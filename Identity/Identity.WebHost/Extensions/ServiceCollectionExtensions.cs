@@ -75,6 +75,9 @@ internal static class ServiceCollectionExtensions
                         "users"
                     ));
             });
+
+            services.AddIdentity<UserEntity, IdentityRole<int>>()
+                .AddEntityFrameworkStores<UsersDbContext>();
         }
 
         public void AddExceptionHandlers()
