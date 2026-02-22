@@ -37,7 +37,7 @@ jobs:
 
   deploy:
     name: Deploy
-    needs: Migrate
+    needs: [Migrate, Release]
     if: github.ref == 'refs/heads/main'
     uses: ./.github/workflows/deploy-release.yaml
     secrets: inherit
