@@ -27,7 +27,7 @@ jobs:
 
   migrate:
     name: Migrate
-    needs Release
+    needs: Release
     if: github.ref == 'refs/heads/main'
     uses: ./.github/workflows/migrate-db.yaml
     secrets: inherit
