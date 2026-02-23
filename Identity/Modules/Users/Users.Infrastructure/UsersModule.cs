@@ -27,7 +27,7 @@ public static class UsersModule
             services.AddIdentity<UserEntity, IdentityRole<int>>()
                 .AddEntityFrameworkStores<UsersDbContext>();
 
-            services.AddSingleton<UserRepository, IdentityUserRepository>();
+            services.AddScoped<UserRepository, IdentityUserRepository>();
         }
     }
 }
