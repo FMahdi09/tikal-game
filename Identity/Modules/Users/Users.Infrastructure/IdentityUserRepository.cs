@@ -31,7 +31,8 @@ public class IdentityUserRepository : UserRepository
     {
         var createdUser = new UserEntity
         {
-            Id = user.Id, UserName = user.Username
+            Id = user.Id,
+            UserName = user.Username
         };
 
         var creationResult = await userManager.CreateAsync(createdUser, password);
