@@ -31,4 +31,4 @@ jobs:
         run: dotnet build ${{ inputs.project-directory }}/Modules --no-restore
 
       - name: Run Unit Tests
-        run: dotnet test ${{ inputs.project-directory }}/Modules --no-build
+        run: dotnet test ${{ inputs.project-directory }}/Modules/Tests.slnf --no-build
